@@ -118,7 +118,14 @@ class HashMapChaining(object):
         return None
 
     def delete(self, key):
-        pass
+        idx = self.hash_func(key)
+        v_list = self.buckets[idx]
+        for (k, value) in v_list:
+            if k == key:
+                v_list.remove((key, value))
+                self.size -= 1
+                break
+        return
 
 
 def main():
@@ -127,6 +134,8 @@ def main():
     data.set(5, 3)
     data.set(11, 3)
     data.set(15, 2)
+
+    data.delete(11)
     # print(data.get(1))
     # print(data.get(11))
     # print(data.get(5))
