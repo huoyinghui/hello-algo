@@ -132,7 +132,7 @@ class HashOpenAddrV1(Hash):
             return default
         v = self.buckets[idx]
         if not v:
-            return None
+            return default
         return v[0]
 
 
