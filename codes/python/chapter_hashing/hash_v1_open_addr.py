@@ -12,7 +12,11 @@ class Hash:
         # 触发扩容的负载因子阈值
         self.load = load
         self.extend_ratio = extend_ratio  # 扩容倍数
-        self.buckets = [[] for _ in range(self.capacity)]  # 桶数组
+        self.buckets = self.init_capacity()
+
+    def init_capacity(self):
+        buckets = [[] for _ in range(self.capacity)]  # 桶数组
+        return buckets
 
     def hash_func(self, key: int) -> int:
         """哈希函数"""
@@ -56,7 +60,7 @@ class Hash:
         # 初始化扩容后的新哈希表
         self.capacity *= self.extend_ratio
         # 分配新空间
-        new_buckets = [[] for _ in range(self.capacity)]
+        new_buckets = self.init_capacity()
         self.buckets = new_buckets
         self.size = 0
         # 将键值对从原哈希表搬运至新哈希表
@@ -148,7 +152,9 @@ class HashOpenAddrV1(Hash):
         return None
 
     def put(self, key: str | int = '', v=None):
+        self.resize()
         idx = self.find_idx(key)
+        self.size += 1
         self.buckets[idx] = (key, v)
         return
 
@@ -159,26 +165,26 @@ class HashOpenAddrV1(Hash):
         v = self.buckets[idx]
         if not v:
             return default
-        return v[0]
+        return v[1]
 
 
 def main():
     # 初始化哈希表
-    hashmap = HashOpenAddrV1(capacity=100)
+    hashmap = HashOpenAddrV1(capacity=5)
 
     # 添加操作
     # 在哈希表中添加键值对 (key, val)
-    hashmap.put(200, "A")
-    hashmap.put(500, "D")
-    hashmap.put(300, "Y")
-    hashmap.put(76, "小法")
-    hashmap.put(876, "小鸭")
+    hashmap.put(2, "A")
+    hashmap.put(7, "D")
+    hashmap.put(12, "Y")
+    hashmap.put(11, "小法")
+    hashmap.put(21, "小鸭")
     print("\n添加完成后，哈希表为\nKey -> Value")
     hashmap.print()
 
     # 查询操作
     # 向哈希表中输入键 key ，得到值 val
-    name = hashmap.get(13276, '')
+    name = hashmap.get(2, '')
     print("\n输入学号 13276 ，查询到姓名 " + name)
 
     # 删除操作
