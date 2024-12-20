@@ -46,6 +46,32 @@ class Hash:
         for key, v in self.items(buckets=self.buckets):
             print(key, v)
 
+    def extend(self):
+        """
+        extend
+
+        """
+        # 暂存原哈希表
+        buckets = self.buckets
+        # 初始化扩容后的新哈希表
+        self.capacity *= self.extend_ratio
+        # 分配新空间
+        new_buckets = [[] for _ in range(self.capacity)]
+        self.buckets = new_buckets
+        self.size = 0
+        # 将键值对从原哈希表搬运至新哈希表
+        for k, v in self.items(buckets=buckets):
+            self.put(k, v)
+        return
+
+    def resize(self):
+        # 当负载因子超过阈值时，执行扩容
+        cur_load = self.load_factor
+        if cur_load >= self.load:
+            print(f"需要扩容({self.size})  {cur_load} >= {self.load}")
+            self.extend()
+        return
+
 
 class HashOpenAddrV1(Hash):
     """
