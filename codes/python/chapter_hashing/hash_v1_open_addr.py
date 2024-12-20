@@ -104,7 +104,7 @@ class HashOpenAddrV1(Hash):
                 return i
         raise ValueError(f"not find empty idx {key}")
 
-    def find_idx_get(self, key: str | int = '') -> int:
+    def find_idx_get(self, key: str | int = '') -> int | None:
         """
         搜索 key 对应的桶索引
         """
