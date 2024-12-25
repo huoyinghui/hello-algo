@@ -21,8 +21,6 @@ class TreeNode(object):
         self.right = right
 
 
-
-
 def bfs(root: TreeNode | None) -> list[int]:
     """
     层序遍历
