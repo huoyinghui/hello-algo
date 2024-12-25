@@ -24,6 +24,9 @@ class TreeNode(object):
 def bfs(root: TreeNode | None) -> list[int]:
     """
     层序遍历
+    层序遍历（level-order traversal）从顶部到底部逐层遍历二叉树，并在每一层按照从左到右的顺序访问节点。
+    层序遍历本质上属于广度优先遍历（breadth-first traversal），也称广度优先搜索（breadth-first search, BFS），
+    它体现了一种“一圈一圈向外扩展”的逐层遍历方式。
     """
     if root is None:
         return []
@@ -64,6 +67,10 @@ def bfs_v2(root: TreeNode | None) -> list[int]:
 
 
 def dfs(root: TreeNode | None, act: int = 0) -> list[int]:
+    """
+    相应地，前序、中序和后序遍历都属于深度优先遍历（depth-first traversal）
+    也称深度优先搜索（depth-first search, DFS），它体现了一种“先走到尽头，再回溯继续”的遍历方式。
+    """
     if root is None:
         return []
     data = [root.val]
