@@ -1,3 +1,17 @@
+"""
+bfs:
+    基于task列表
+    基于队列顺序优化
+
+dfs:
+    act:0 中序
+    act:1 前序
+    act:2 后序
+
+dfs_mul: 多叉树
+"""
+from typing import List, Optional
+
 
 class TreeNode(object):
 
@@ -49,6 +63,32 @@ def bfs_v2(root: TreeNode | None) -> list[int]:
     return data
 
 
+def dfs(root: TreeNode | None, act: int = 0) -> list[int]:
+    if root is None:
+        return []
+    data = [root.val]
+    left = dfs(root.left, act=act)
+    right = dfs(root.right, act=act)
+    match act:
+        case 0:
+            return left + data + right
+        case 1:
+            return data + left + right
+        case 2:
+            return left + right + data
+
+
+class Solution:
+
+    def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
+        """
+        https://leetcode.com/problems/binary-tree-inorder-traversal/?envType=problem-list-v2&envId=tree&
+        """
+        if not root:
+            return []
+        return dfs(root, 0)
+
+
 def main():
     """
                 0
@@ -65,6 +105,9 @@ def main():
     root = TreeNode(data_list[0], left=n1, right=n2)
     print(bfs(root))
     print(bfs_v2(root))
+
+    # print(dfs(root, 0))
+    print(dfs(root, 1))
     pass
 
 
