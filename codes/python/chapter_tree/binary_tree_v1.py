@@ -21,6 +21,8 @@ class TreeNode(object):
         self.right = right
 
 
+
+
 def bfs(root: TreeNode | None) -> list[int]:
     """
     层序遍历
@@ -71,9 +73,9 @@ def dfs(root: TreeNode | None, act: int = 0) -> list[int]:
     right = dfs(root.right, act=act)
     match act:
         case 0:
-            return left + data + right
-        case 1:
             return data + left + right
+        case 1:
+            return left + data + right
         case 2:
             return left + right + data
 
