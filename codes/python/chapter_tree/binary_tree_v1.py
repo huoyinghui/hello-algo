@@ -27,6 +27,28 @@ def bfs(root: TreeNode | None) -> list[int]:
     return data
 
 
+def bfs_v2(root: TreeNode | None) -> list[int]:
+    """
+    层序遍历 deque
+
+    广度优先遍历通常借助“队列”来实现。队列遵循“先进先出”的规则，而广度优先遍历则遵循“逐层推进”的规则，两者背后的思想是一致的
+    """
+    if root is None:
+        return []
+    from collections import deque
+    queue = deque([root])
+    data = list()
+    while queue:
+        # 从左出，右边入
+        node = queue.popleft()
+        data.append(node.val)
+        if node.left:
+            queue.append(node.left)
+        if node.right:
+            queue.append(node.right)
+    return data
+
+
 def main():
     """
                 0
@@ -42,6 +64,7 @@ def main():
     n2 = TreeNode(data_list[2], left=n5, right=n6)
     root = TreeNode(data_list[0], left=n1, right=n2)
     print(bfs(root))
+    print(bfs_v2(root))
     pass
 
 
