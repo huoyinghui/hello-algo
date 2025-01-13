@@ -1,3 +1,9 @@
+"""
+左子树 < 根节点 < 右子树”
+
+"""
+from en.codes.python.chapter_array_and_linkedlist.linked_list import remove
+
 
 class TreeNode:
     def __init__(self, value, left=None, right=None):
@@ -54,6 +60,72 @@ def insert(root: TreeNode, value: int) -> TreeNode:
     else:
         pre.left = target
     return target
+
+
+def compute_degree(root: TreeNode) -> int:
+    if not root:
+        return 0
+    degree = 0
+    if root.left:
+        degree += 1
+    if root.right:
+        degree += 1
+    return degree
+
+
+def delete(root: TreeNode, value: int) -> TreeNode:
+    """
+    节点数量，分 0、1 和 2 三种情况
+
+    当待删除节点的度为0时，将待删除节直接删除.
+    当待删除节点的度为1时，将待删除节点替换为其子节点即可。
+    当待删除节点的度为2时，
+        而需要使用一个节点替换该节点.
+
+    """
+    if not root:
+        return None
+    cur = root
+    # 1.find
+    pre = None
+    child = 0
+    while cur:
+        if cur.value == value:
+            break
+        elif cur.value < value:
+            pre = cur
+            cur = cur.left
+        elif cur.value > value:
+            pre = cur
+            cur = cur.right
+    # 2.degree
+    degree = compute_degree(cur)
+    if degree == 0:
+        # pre 是cur的父节点
+        # cur 是叶子节点. pre.left = cur
+        # 直接删除
+        pre.left = None
+        return
+
+    if degree == 1:
+        # pre 是cur的父节点
+        # cur 是叶子节点. pre.left = cur
+        # cur.left 只有左孩子
+        # 将待删除节点替换为其子节点即可
+        cur = cur.left
+        return
+
+    if degree == 2:
+        # 1.找到待删除节点在“中序遍历序列”中的下一个节点，记为 tmp
+        # 2.用tmp的值覆盖待删除节点的值，并在树中递归删除节点 tmp
+        tmp: TreeNode = cur.right
+        while tmp.left:
+            tmp = tmp.left
+        remove(tmp.value)
+        cur.value = tmp.value
+    return
+
+
 
 
 def main():
