@@ -27,6 +27,7 @@ def insert(root: TreeNode, value: int) -> TreeNode:
     插入节点
     1.查找插入位置
     2.在该位置插入节点
+    pre: 记录上一次的位置
     """
     if not root:
         return None
