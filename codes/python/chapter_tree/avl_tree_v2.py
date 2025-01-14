@@ -64,7 +64,19 @@ class AVLTree:
         return self.height(node.left) - self.height(node.right)
 
     def right_rotate(self, node: TreeNode | None) -> TreeNode | None:
-        pass
+        """
+        右旋操作
+        """
+        child = node.left
+        grand_child = child.right
+        # 以 child 为原点，将 node 向右旋转
+        child.right = node
+        node.left = grand_child
+        # 更新节点高度
+        self.update_height(node)
+        self.update_height(child)
+        # 返回旋转后子树的根节点
+        return child
 
     def left_rotate(self, node: TreeNode | None) -> TreeNode | None:
         pass
