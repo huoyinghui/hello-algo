@@ -61,11 +61,14 @@ class AVLTree:
         if not node:
             return 0
         # 节点平衡因子 = 左子树高度 - 右子树高度
-        return self.height(node.left) - self.height(node.right)
+        diff = self.height(node.left) - self.height(node.right)
+        # diff > 0: 左高
+        # diff < 0: 右边高
+        return diff
 
     def right_rotate(self, node: TreeNode | None) -> TreeNode | None:
         """
-        右旋操作
+        右旋操作: 左偏
         """
         child = node.left
         grand_child = child.right
@@ -79,4 +82,29 @@ class AVLTree:
         return child
 
     def left_rotate(self, node: TreeNode | None) -> TreeNode | None:
-        pass
+        """
+        左旋操作: 右偏
+        """
+        child = node.right
+        grand_child = child.left
+        # 以 child 为原点，将 node 向右旋转
+        child.left = node
+        node.right = grand_child
+        # 更新节点高度
+        self.update_height(node)
+        self.update_height(child)
+        # 返回旋转后子树的根节点
+        return child
+
+
+def main():
+    # 初始化空 AVL 树
+    avl_tree = AVLTree()
+
+    # 插入节点
+    # 请关注插入节点后，AVL 树是如何保持平衡的
+    for val in [1, 2, 3, 4, 5, 8, 7, 9, 10, 6]:
+        print(val)
+
+if __name__ == '__main__':
+    main()
