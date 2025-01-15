@@ -33,6 +33,10 @@ class AVLTree:
     根据节点失衡情况的不同，旋转操作分为四种：右旋、左旋、先右旋后左旋、先左旋后右旋。
     """
 
+    def __init__(self):
+        """构造方法"""
+        self._root = None
+
     def height(self, node: TreeNode | None) -> int:
         """
         获取节点高度
@@ -130,6 +134,67 @@ class AVLTree:
             # 平衡树，无须旋转，直接返回
             return node
 
+    def insert(self, val):
+        """插入节点"""
+        self._root = self.insert_helper(self._root, val)
+
+    def insert_helper(self, node: TreeNode | None, val: int) -> TreeNode:
+        """
+        递归插入节点（辅助方法）
+
+        在 AVL 树中插入节点后，从该节点到根节点的路径上可能会出现一系列失衡节点
+        我们需要从这个节点开始，自底向上执行旋转操作，使所有失衡节点恢复平衡.
+        """
+        if node is None:
+            return TreeNode(val)
+        # 1. 查找插入位置并插入节点
+        if val < node.val:
+            node.left = self.insert_helper(node.left, val)
+        elif val > node.val:
+            node.right = self.insert_helper(node.right, val)
+        else:
+            # 重复节点不插入，直接返回
+            return node
+        # 更新节点高度
+        self.update_height(node)
+        # 2. 执行旋转操作，使该子树重新恢复平衡
+        return self.rotate(node)
+
+    def remove(self, val: int):
+        """删除节点"""
+        self._root = self.remove_helper(self._root, val)
+
+    def remove_helper(self, node: TreeNode | None, val: int) -> TreeNode | None:
+        """
+        递归删除节点（辅助方法）
+        """
+        if node is None:
+            return None
+        # 1. 查找节点并删除
+        if val < node.val:
+            node.left = self.remove_helper(node.left, val)
+        elif val > node.val:
+            node.right = self.remove_helper(node.right, val)
+        else:
+            if node.left is None or node.right is None:
+                child = node.left or node.right
+                # 子节点数量 = 0 ，直接删除 node 并返回
+                if child is None:
+                    return None
+                # 子节点数量 = 1 ，直接删除 node
+                else:
+                    node = child
+            else:
+                # 子节点数量 = 2 ，则将中序遍历的下个节点删除，并用该节点替换当前节点
+                temp = node.right
+                while temp.left is not None:
+                    temp = temp.left
+                node.right = self.remove_helper(node.right, temp.val)
+                node.val = temp.val
+        # 更新节点高度
+        self.update_height(node)
+        # 2. 执行旋转操作，使该子树重新恢复平衡
+        return self.rotate(node)
 
 
 def main():
@@ -139,7 +204,8 @@ def main():
     # 插入节点
     # 请关注插入节点后，AVL 树是如何保持平衡的
     for val in [1, 2, 3, 4, 5, 8, 7, 9, 10, 6]:
-        print(val)
+        avl_tree.insert(val)
+    print(avl_tree)
 
 if __name__ == '__main__':
     main()
