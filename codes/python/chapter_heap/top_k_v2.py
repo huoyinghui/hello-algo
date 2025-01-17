@@ -56,8 +56,14 @@ class QueueSrv:
 
 
 def main():
-    n = heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
-    print(n)
+    # n = heapsort([1, 3, 5, 7, 9, 2, 4, 6, 8, 0])
+    # print(n)
+
+    from collections import deque
+    nums = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
+
+    task = deque(nums, maxlen=3)
+    print(task)
     pass
 
 
