@@ -63,7 +63,9 @@ def main():
     nums = [1, 3, 5, 7, 9, 2, 4, 6, 8, 0]
 
     task = deque(nums, maxlen=3)
-    print(task)
+    while task:
+        ret = task.popleft()
+        print(ret)
     pass
 
 
