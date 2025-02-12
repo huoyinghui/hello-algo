@@ -54,6 +54,17 @@ class Heap(ABC):
         heapq.heapify(self.heap)
         return
 
+    def remove(self, item: Any) -> None:
+        """移除指定元素（任务）"""
+        try:
+            # 这里采用替换删除策略，确保从堆中删除任务
+            index = self.heap.index(self.value(item))
+            self.heap[index] = self.heap[-1]  # 将最后一个元素移到删除位置
+            self.heap.pop()  # 删除最后一个元素
+            heapq.heapify(self.heap)  # 重新调整堆
+        except ValueError:
+            pass  # 如果找不到元素，则跳过
+
 
 class MinMaxHeap(Heap):
     """
@@ -65,61 +76,39 @@ class MinMaxHeap(Heap):
         return self.flag * item
 
 
-class Task(object):
-    """
-    任务类, 优先级和任务类容
-    """
-    """任务类，包含优先级和任务内容"""
-
-    def __init__(self, priority: int, data: Any):
-        self.priority = priority  # 优先级
-        self.data = data  # 任务的实际数据
-
-    def __lt__(self, other):
-        """根据优先级进行比较，小的优先级优先"""
-        return self.priority < other.priority
-
-    def __repr__(self):
-        return f"Task(priority={self.priority}, data={self.data})"
-
-
-class TaskHeap(MinMaxHeap):
-
-    def value(self, item: Task):
-        """
-        返回任务的优先级
-        """
-        if item is None:
-            return None
-        return self.flag * item.priority
-
-
 class PriorityQueue:
-    """优先级队列，基于自定义的 Heap 实现"""
-    def __init__(self, is_max_heap=False):
-        """初始化队列，默认是小顶堆，is_max_heap 为 True 时使用大顶堆"""
-        self.heap = Heap(is_max_heap)
+    def __init__(self, is_max_heap: bool = False):
+        """初始化优先级队列，默认是小顶堆。如果 is_max_heap 为 True，则为大顶堆。"""
+        self.is_max_heap = is_max_heap
+        self.heap = []
+        self.flag = -1 if is_max_heap else 1  # 大顶堆需要取负值，调整优先级顺序
 
-    def push(self, task: Task = None) -> None:
-        """将任务按优先级插入队列"""
-        self.heap.push(task)
-        return
+    def push(self, item: Any = None, priority: int = 0):
+        """将任务和优先级插入队列"""
+        # 插入时将任务的优先级乘以 flag，来实现最大堆或最小堆的功能
+        heapq.heappush(self.heap, (self.flag * priority, item))
 
-    def pop(self) -> Task:
+    def pop(self) -> Any:
         """弹出优先级最高的任务"""
-        return self.heap.pop()
+        if not self.is_empty():
+            priority, item = heapq.heappop(self.heap)
+            return item
+        return None
 
-    def peek(self) -> Task:
-        """查看队列中优先级最高的任务"""
-        return self.heap.peek()
+    def peek(self):
+        """查看队列中优先级最高的任务，但不弹出"""
+        if not self.is_empty():
+            priority, item = self.heap[0]
+            return item
+        return None
 
-    def is_empty(self) -> bool:
+    def is_empty(self):
         """检查队列是否为空"""
-        return self.heap.is_empty()
+        return len(self.heap) == 0
 
-    def size(self) -> int:
-        """获取队列大小"""
-        return self.heap.size()
+    def size(self):
+        """返回队列的大小"""
+        return len(self.heap)
 
 
 def test_max_min_heap():
@@ -155,21 +144,33 @@ def test_max_min_heap():
     return
 
 
+# 测试代码
+def test_priority_queue():
+    pq = PriorityQueue(is_max_heap=False)  # 小顶堆，优先级低的任务先执行
+
+    pq.push(dict(name='1', data=1), 3)
+    pq.push(dict(name='2', data=2), 4)
+    pq.push(dict(name='3', data=3), 5)
+
+    print("Peek:", pq.peek())  # 输出 Task 2
+    print("Pop:", pq.pop())  # 输出 Task 2
+    print("Pop:", pq.pop())  # 输出 Task 3
+    print("Pop:", pq.pop())  # 输出 Task 1
+
+    # 使用大顶堆
+    pq_max = PriorityQueue(is_max_heap=True)
+    pq_max.push("Task A", 1)
+    pq_max.push("Task B", 3)
+    pq_max.push("Task C", 2)
+
+    print("Peek (max heap):", pq_max.peek())  # 输出 Task B
+    print("Pop (max heap):", pq_max.pop())  # 输出 Task B
+    print("Pop (max heap):", pq_max.pop())  # 输出 Task C
+    print("Pop (max heap):", pq_max.pop())  # 输出 Task A
+
+
 def main():
-    # 创建一个优先级队列（小顶堆，优先级低的任务先执行）
-    pq = PriorityQueue(is_max_heap=False)
-
-    # 创建任务对象并插入队列
-    pq.push(Task(2, "Task 2"))
-    pq.push(Task(1, "Task 1"))
-    pq.push(Task(3, "Task 3"))
-
-    # 获取队列中的最小优先级任务
-    print("Peek:", pq.peek())  # 输出 Task(priority=1, data='Task 1')
-
-    # 弹出任务
-    print("Pop:", pq.pop())  # 输出 Task(priority=1, data='Task 1')
-    print("Pop:", pq.pop())  # 输出 Task(priority=2, data='Task 2')
+    test_priority_queue()
     return
 
 
