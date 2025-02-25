@@ -155,7 +155,7 @@ if __name__ == "__main__":
 
     graph.add_edge(1, 2)
     graph.add_edge(3, 4)
-    graph.add_edge(2, 4)
+    # graph.add_edge(2, 4)
     # graph.add_node(2)
-    # graph.remove_node(1)
+    graph.remove_node(2)
     graph.print()
