@@ -32,6 +32,14 @@ def main():
     # 二分查找（双闭区间）
     index = binary_search(nums, target)
     print("目标元素 6 的索引 = ", index)
+
+    import bisect
+    lst = [1, 3, 3, 5, 7]
+    bisect.insort(lst, 3)  # 插入最右的 3
+    print(lst)  # [1, 3, 3, 3, 5, 7]
+
+    bisect.insort_left(lst, 3)  # 插入最左的 3
+    print(lst)
     pass
 
 
