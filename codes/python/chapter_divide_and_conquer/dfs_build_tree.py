@@ -79,10 +79,13 @@ def dfs_find_tree_path(target: int = 0, except_target: int = 0,
     if root.val == except_target:
         return None
     path.append(root.val)
+    # 是否解决，记录结果
     if root.val == target:
         res.append(list(path))
+    # 遍历所有选择
     dfs_find_tree_path(target=target, except_target=except_target, root=root.left, path=path, res=res)
     dfs_find_tree_path(target=target, except_target=except_target, root=root.right, path=path, res=res)
+    # 撤回
     path.pop()
     return path
 
