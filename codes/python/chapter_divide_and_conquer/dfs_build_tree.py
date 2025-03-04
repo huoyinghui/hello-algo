@@ -69,17 +69,20 @@ def dfs_print_tree(target: int = 0, root: TreeNode = None, path: List[int] = Non
     return path
 
 
-def dfs_find_tree_path(target: int = 0, root: TreeNode = None, path: List[int] = None, res: List = None):
+def dfs_find_tree_path(target: int = 0, except_target: int = 0,
+                       root: TreeNode = None, path: List[int] = None, res: List = None):
     """
     dfs_find_tree_path
     """
     if not root:
         return None
+    if root.val == except_target:
+        return None
     path.append(root.val)
     if root.val == target:
         res.append(list(path))
-    dfs_find_tree_path(target=target, root=root.left, path=path, res=res)
-    dfs_find_tree_path(target=target, root=root.right, path=path, res=res)
+    dfs_find_tree_path(target=target, except_target=except_target, root=root.left, path=path, res=res)
+    dfs_find_tree_path(target=target, except_target=except_target, root=root.right, path=path, res=res)
     path.pop()
     return path
 
@@ -94,7 +97,7 @@ def main():
     root = dfs_build_tree(preorder, inorder)
     path = list()
     res = list()
-    dfs_find_tree_path(target=7, root=root, path=path, res=res)
+    dfs_find_tree_path(target=7, except_target=2, root=root, path=path, res=res)
     print("包含7的路径：", res)
     return
 
