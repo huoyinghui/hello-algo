@@ -10,6 +10,12 @@ class TreeNode(object):
         self.left = left
         self.right = right
 
+    def __repr__(self):
+        return self.__str__()
+
+    def __str__(self):
+        return "TreeNode(val={}, left={}, right={})".format(self.val, self.left, self.right)
+
 
 def find_left_child(inorder: List[int], root: TreeNode):
     """
@@ -51,16 +57,45 @@ def dfs_build_tree(preorder: List = None, inorder: List = None):
     return root
 
 
+def dfs_print_tree(target: int = 0, root: TreeNode = None, path: List[int] = None):
+    """
+    dfs_print_tree
+    """
+    if not root:
+        return None
+    path.append(root.val)
+    dfs_print_tree(target=target, root=root.left, path=path)
+    dfs_print_tree(target=target, root=root.right, path=path)
+    return path
+
+
+def dfs_find_tree_path(target: int = 0, root: TreeNode = None, path: List[int] = None, res: List = None):
+    """
+    dfs_find_tree_path
+    """
+    if not root:
+        return None
+    path.append(root.val)
+    if root.val == target:
+        res.append(list(path))
+    dfs_find_tree_path(target=target, root=root.left, path=path, res=res)
+    dfs_find_tree_path(target=target, root=root.right, path=path, res=res)
+    path.pop()
+    return path
+
+
 def main():
     """Driver Code"""
-    preorder = [3, 9, 2, 1, 7]
-    inorder = [9, 3, 1, 2, 7]
+    preorder = [3, 7, 2, 1, 7]
+    inorder = [7, 3, 1, 2, 7]
     print(f"前序遍历 = {preorder}")
     print(f"中序遍历 = {inorder}")
 
     root = dfs_build_tree(preorder, inorder)
-    print("构建的二叉树为：")
-    # print_tree(root)
+    path = list()
+    res = list()
+    dfs_find_tree_path(target=7, root=root, path=path, res=res)
+    print("包含7的路径：", res)
     return
 
 
