@@ -62,7 +62,8 @@ def main():
     给定一个共有 n 阶的楼梯，你每步可以上 1 阶或者2 阶，请问有多少种方案可以爬到楼顶？
     """
     # ret = solve(1, choice=[1, 2])
-    # print(ret)
+    ret = climbing_stairs_backtrack(n=3)
+    print(ret)
     pass
 
 
