@@ -44,7 +44,7 @@ def climbing_stairs_backtrack(n: int) -> int:
     return res[0]
 
 
-def solve(n: int = 0, choice: list[int] = None) -> int:
+def climbing_stairs_dp(n: int = 0) -> int:
     """
     dp[n] = []
     """
@@ -90,7 +90,7 @@ def main():
     """
     给定一个共有 n 阶的楼梯，你每步可以上 1 阶或者2 阶，请问有多少种方案可以爬到楼顶？
     """
-    ret = solve(38, choice=[1, 2])
+    ret = climbing_stairs_dp(38)
     # 63245986
     # ret = climbing_stairs_dfs(n=38)
     # ret = climbing_stairs_backtrack(n=38)
