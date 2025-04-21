@@ -47,17 +47,22 @@ def climbing_stairs_backtrack(n: int) -> int:
 def climbing_stairs_dp(n: int = 0) -> int:
     """
     dp[n] = []
+    记忆化搜索是一种“从顶至底”的方法
+
+    动态规划是一种“从底至顶”的方法：从最小子问题的解开始，迭代地构建更大子问题的解，直至得到原问题的解。
     """
-    dp = [0] * (n+1)
-    dp[0] = 0
+    # 初始化 dp 表，用于存储子问题的解
     if n <= 2:
         return n
+    dp = [0] * (n+1)
+    dp[0] = 0
     dp[1] = 1
     dp[2] = 2
-    # 1: dp[2] + 1
-    # 2: dp[1] + 1
-    # dp[3] = max(dp[2]+1, dp[1]+1)
+    # 状态转移：从较小子问题逐步求解较大子问题
     for i in range(3, n+1):
+        # dp[i]: 依赖前一个，前2个
+        # dp[i-1]:
+        # dp[i-2]:
         dp[i] = dp[i-1] + dp[i-2]
     return dp[n]
 
