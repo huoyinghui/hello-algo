@@ -67,6 +67,16 @@ def climbing_stairs_dp(n: int = 0) -> int:
     return dp[n]
 
 
+def climbing_stairs_dp_comp(n: int) -> int:
+    """爬楼梯：空间优化后的动态规划"""
+    if n == 1 or n == 2:
+        return n
+    a, b = 1, 2
+    for _ in range(3, n + 1):
+        a, b = b, a + b
+    return b
+
+
 @lru_cache(maxsize=None)
 def dfs(i: int = 0):
     """
