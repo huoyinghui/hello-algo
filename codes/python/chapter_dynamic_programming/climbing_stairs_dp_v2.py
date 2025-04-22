@@ -1,4 +1,5 @@
 from itertools import count
+from typing import List
 from functools import lru_cache
 
 
@@ -22,6 +23,9 @@ class Solution:
 
     def climbStairs(self, n: int) -> int:
         return self.dfs(n)
+
+    def minCostClimbingStairs(self, cost: List[int]) -> int:
+        pass
 
 
 def main():
