@@ -1,4 +1,5 @@
 from itertools import count
+from math import inf
 from typing import List
 from functools import lru_cache
 
@@ -42,7 +43,9 @@ class Solution:
         给定一个包含非负整数的 m x n 网格 grid ，请找出一条从左上角到右下角的路径，使得路径上的数字总和为最小。
         说明：一个机器人每次只能向下或者向右移动一步。
         grid = [
-            [1, 3, 1], [1, 5, 1], [4, 2, 1]
+            [1, 3, 1],
+            [1, 5, 1],
+            [4, 2, 1]
         ]
 
         最优子结构: 关联的状态
@@ -66,17 +69,44 @@ class Solution:
             for i in range(1, n):
                 # 相邻的前两个
                 dp[j][i] = min(dp[j][i-1], dp[j-1][i]) + grid[j][i]
-
         return dp[m-1][n-1]
+
+    def minPathSum_dfs(self, has=None, grid=None, i=0, j=0) -> int:
+        """
+        最小路径和：暴力搜索
+        i: 行
+        j: 列
+
+        grid = [
+            [1, 3, 1],
+            [1, 5, 1],
+            [4, 2, 1]
+        ]
+        """
+        # 若行列索引越界，则返回 +∞ 代价
+        if i < 0 or j < 0:
+            return inf
+        if i == 0 and j == 0:
+            return grid[0][0]
+        key = f"{i}_{j}"
+        if key in has:
+            return has[key]
+        up = self.minPathSum_dfs(has=has, grid=grid, i=i-1, j=j)
+        left = self.minPathSum_dfs(has=has, grid=grid, i=i, j=j-1)
+        cost = min(up, left) + grid[i][j]
+        has[f"{i}_{j}"] = cost
+        return cost
 
 
 def main():
     # n = 6
     # c = Solution().climbStairs(n=n)
     # print(c)
-    # grid = [[1, 2, 3], [4, 5, 6]]
-    grid = [[1, 3, 1], [1, 5, 1], [4, 2, 1]]
-    c = Solution().minPathSum(grid=grid)
+    grid = [[1, 2, 3], [4, 5, 6]]
+    # grid = [[1, 3, 1], [1, 5, 1], [4, 2, 1]]
+    # c = Solution().minPathSum(grid=grid)
+    has = {}
+    c = Solution().minPathSum_dfs(has=has, grid=grid, i=len(grid)-1, j=len(grid[0])-1)
     print(c)
     pass
 
