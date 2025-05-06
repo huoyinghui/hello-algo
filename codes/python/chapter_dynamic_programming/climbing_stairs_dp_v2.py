@@ -22,6 +22,26 @@ class Solution:
             return i
         return cls.dfs(i=i-1) + cls.dfs(i=i-2)
 
+    def climb_stairs_dp(self, n: int) -> int:
+        # return self.dfs(n)
+        # 保存第i个位置的方案数
+        if n <= 2:
+            return n
+        dp = [0] * (n+1)
+        dp[0] = 0
+        dp[1] = 1
+        dp[2] = 2
+        a, b = 2, 1
+        for i in range(3, n+1):
+            # 每次可以选1，2
+            # dp[i]只依赖dp[i-1], dp[i-2].
+            # 到第i-1, 和第i-2的位置，是互斥不重复的
+            # 所以到达i的总方案: 第i-1的方案数 + 第i-2的方案数
+            # dp[i] = dp[i-1] + dp[i-2]
+            a, b = a + b, b
+        # return dp[n]
+        return a
+
     def climbStairs(self, n: int) -> int:
         return self.dfs(n)
 
@@ -99,14 +119,14 @@ class Solution:
 
 
 def main():
-    # n = 6
-    # c = Solution().climbStairs(n=n)
+    n = 3
+    c = Solution().climb_stairs_dp(n=n)
     # print(c)
-    grid = [[1, 2, 3], [4, 5, 6]]
+    # grid = [[1, 2, 3], [4, 5, 6]]
     # grid = [[1, 3, 1], [1, 5, 1], [4, 2, 1]]
     # c = Solution().minPathSum(grid=grid)
-    has = {}
-    c = Solution().minPathSum_dfs(has=has, grid=grid, i=len(grid)-1, j=len(grid[0])-1)
+    # has = {}
+    # c = Solution().minPathSum_dfs(has=has, grid=grid, i=len(grid)-1, j=len(grid[0])-1)
     print(c)
     pass
 
