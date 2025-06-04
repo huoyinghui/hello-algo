@@ -22,16 +22,22 @@ class Solution:
     def minCostClimbingStairs(self, cost: List[int]) -> int:
         """
         dp[i]: 到达第i个台阶的最小话费
-        dp[i] = min(dp[i-1], dp[i-2]) + cost[i]
+        起点：可以是第 0 或第 1 阶
+        •	每次跳之前，要先付当前阶的费用
+        •	每次可以跳 1 或 2 阶
+        •	目标是到达「楼梯之外的下一阶」，不用付最后一步的代价
         """
         if not cost:
             return 0
+        # 1.定义dp
         n = len(cost)
-        dp = [inf] * n
-        dp[0] = cost[0]
-        for i in range(1, n):
-            dp[i] = 0
-        return 0
+        dp = [0] * (n+1)
+        dp[0] = 0  # 起点可以是 cost[0]，不付费
+        # dp[1] = min(0, cost[1])  # 或者 cost[1]，也不付费
+        dp[1] = 0
+        for i in range(2, n+1):
+            dp[i] = min(dp[i-1] + cost[i-1], dp[i-2] + cost[i-2])
+        return dp[n]
 
 
 def main():
@@ -56,7 +62,6 @@ def main():
 - 支付 1 ，向上爬一个台阶，到达楼梯顶部。
 总花费为 6 。
     """
-    # prices = [7, 6, 4, 3, 1]
     cost = [10, 15, 20]
     # cost = [1, 100, 1, 1, 1, 100, 1, 1, 100, 1]
     ret = Solution().minCostClimbingStairs(cost=cost)
