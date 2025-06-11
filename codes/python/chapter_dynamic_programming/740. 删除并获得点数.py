@@ -3,7 +3,22 @@ from typing import List
 
 class Solution:
     def deleteAndEarn(self, nums: List[int]) -> int:
-        pass
+        if not nums:
+            return 0
+        n = len(nums)
+        if n == 1:
+            return nums[0]
+        # 初始化
+        dp = [0] * len(nums)
+        dp[0] = nums[0]
+        # nums[0, 1]: 删除大的
+        dp[1] = max(nums[0], nums[1])
+        if n == 2:
+            return dp[1]
+        while nums:
+            pass
+        # 初始化
+        return 0
 
 
 def main():
