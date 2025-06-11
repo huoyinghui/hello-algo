@@ -19,7 +19,9 @@ class Solution:
 
         for i in range(2, n):
             # yes / no
+            # 偷当前
             yes = dp[i-2] + nums[i]
+            # 不偷当前
             no = dp[i-1]
             dp[i] = max(yes, no)
         # 迭代
