@@ -7,7 +7,9 @@ class Solution:
 
 
 def main():
-    pass
+    nums = [3, 4, 2]
+    ret = Solution().deleteAndEarn(nums=nums)
+    print(f"ret {ret}")
 
 
 if __name__ == '__main__':
