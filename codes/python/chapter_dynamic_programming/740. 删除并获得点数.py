@@ -8,21 +8,19 @@ class Solution:
         n = len(nums)
         if n == 1:
             return nums[0]
-        # 初始化
-        dp = [0] * len(nums)
-        dp[0] = nums[0]
-        # nums[0, 1]: 删除大的
-        dp[1] = max(nums[0], nums[1])
-        if n == 2:
-            return dp[1]
-        while nums:
-            pass
+        # nums -> counter map
+        from collections import Counter
+        count = Counter(nums)
+        max_num = max(count)
+        points = [0] * (max_num + 1)
+        # for num in count:
+        #     points[num] = num * count[num]
         # 初始化
         return 0
 
 
 def main():
-    nums = [3, 4, 2]
+    nums = [3, 4, 4, 2]
     ret = Solution().deleteAndEarn(nums=nums)
     print(f"ret {ret}")
 
