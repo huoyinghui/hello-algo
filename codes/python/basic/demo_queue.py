@@ -49,6 +49,14 @@ class SafeQueue(QueueBaseMixin):
         self.all_tasks_done = threading.Condition(self.mutex)
         self.unfinished_tasks = 0
 
+    def qsize(self):
+        with self.mutex:
+            return self._qsize()
+
+    def empty(self):
+        with self.mutex:
+            return not self._qsize()
+
 
 def main():
     q = QueueBaseMixin()
