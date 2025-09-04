@@ -10,8 +10,8 @@ def task():
     global counter
     time.sleep(random.random() * 0.001)
     for _ in range(10000):
-        with lock:
-            counter += 1
+        # with lock:
+        counter += 1
 
 
 def main():
