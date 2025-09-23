@@ -22,7 +22,7 @@ def demo_pickle_storage():
     print("=" * 60)
     
     config = {
-        'base_path': './demo_pickle_storage'
+        'base_path': '../data/demo_pickle_storage'
     }
     
     lsm = LSMTreeV2(storage_type='pickle', storage_config=config, max_memtable_size=5)
@@ -62,7 +62,7 @@ def demo_json_storage():
     print("=" * 60)
     
     config = {
-        'base_path': './demo_json_storage'
+        'base_path': '../data/demo_json_storage'
     }
     
     lsm = LSMTreeV2(storage_type='json', storage_config=config, max_memtable_size=5)
@@ -103,7 +103,7 @@ def demo_excel_storage():
     
     try:
         config = {
-            'base_path': './demo_excel_storage',
+            'base_path': '../data/demo_excel_storage',
             'excel_file': 'lsm_data.xlsx',
             'sheet_name': 'SSTables'
         }
@@ -257,8 +257,8 @@ def demo_performance_comparison():
     
     storage_configs = [
         ('memory', {}),
-        ('pickle', {'base_path': './perf_pickle'}),
-        ('json', {'base_path': './perf_json'}),
+        ('pickle', {'base_path': '../data/perf_pickle'}),
+        ('json', {'base_path': '../data/perf_json'}),
     ]
     
     test_data = [(f"key_{i}", f"value_{i}") for i in range(100)]

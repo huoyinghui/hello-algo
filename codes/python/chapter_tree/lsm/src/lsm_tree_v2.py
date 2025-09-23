@@ -358,7 +358,7 @@ def test_lsm_tree_v2():
         print(f"\n--- 测试 {storage_type.upper()} 存储后端 ---")
         
         # 创建LSM-Tree实例
-        config = {'base_path': f'./test_{storage_type}_data'}
+        config = {'base_path': f'../data/test_{storage_type}_data'}
         lsm = LSMTreeV2(storage_type=storage_type, storage_config=config, max_memtable_size=3)
         
         # 测试基本操作

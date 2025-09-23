@@ -195,8 +195,8 @@ def example_performance_comparison():
     # 测试不同存储后端
     storage_configs = [
         ('memory', {}),
-        ('pickle', {'base_path': './perf_pickle'}),
-        ('json', {'base_path': './perf_json'}),
+        ('pickle', {'base_path': '../data/perf_pickle'}),
+        ('json', {'base_path': '../data/perf_json'}),
     ]
     
     for storage_type, config in storage_configs:

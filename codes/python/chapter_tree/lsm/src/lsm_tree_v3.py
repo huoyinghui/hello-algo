@@ -360,7 +360,7 @@ def test_lsm_tree_v3():
         print(f"\n--- 测试 {storage_type.upper()} 存储后端 ---")
         
         # 创建LSM-Tree实例
-        config = {'base_path': f'./test_{storage_type}_data'}
+        config = {'base_path': f'../data/test_{storage_type}_data'}
         lsm = LSMTreeV3(storage_type=storage_type, storage_config=config, max_memtable_size=3)
         
         # 测试基本操作
@@ -418,7 +418,7 @@ def demo_storage_switching_v3():
     
     # 切换到JSON存储
     print("\n切换到JSON存储")
-    json_config = {'base_path': './switched_data_v3'}
+    json_config = {'base_path': '../data/switched_data_v3'}
     lsm.switch_storage('json', json_config)
     
     # 验证数据迁移

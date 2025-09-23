@@ -28,7 +28,7 @@ lsm/
 │   ├── storage_demo.py         # 存储后端演示
 │   ├── storage_engine_demo.py  # 存储引擎包演示
 │   └── usage_examples.py       # 使用示例
-├── data/                        # 存储数据文件
+├── data/                        # 存储数据文件 (被.gitignore忽略)
 │   ├── *_demo/                 # 各种演示生成的数据
 │   ├── *_data/                 # 测试数据
 │   └── *_visual/               # 可视化数据

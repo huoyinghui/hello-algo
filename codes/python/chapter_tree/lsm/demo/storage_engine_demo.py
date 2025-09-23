@@ -55,8 +55,8 @@ def demo_storage_factory():
     # 测试不同存储后端的创建
     storage_configs = [
         ('memory', {}),
-        ('pickle', {'base_path': './factory_demo_pickle'}),
-        ('json', {'base_path': './factory_demo_json'}),
+        ('pickle', {'base_path': '../data/factory_demo_pickle'}),
+        ('json', {'base_path': '../data/factory_demo_json'}),
     ]
     
     for storage_type, config in storage_configs:
@@ -112,7 +112,7 @@ def demo_storage_switching():
     
     # 切换到JSON存储
     print("\n2. 切换到JSON存储")
-    json_config = {'base_path': './switching_demo'}
+    json_config = {'base_path': '../data/switching_demo'}
     json_storage = create_storage('json', json_config)
     
     # 迁移数据
@@ -214,8 +214,8 @@ def demo_storage_performance():
     # 测试不同存储后端
     storage_configs = [
         ('memory', {}),
-        ('pickle', {'base_path': './perf_demo_pickle'}),
-        ('json', {'base_path': './perf_demo_json'}),
+        ('pickle', {'base_path': '../data/perf_demo_pickle'}),
+        ('json', {'base_path': '../data/perf_demo_json'}),
     ]
     
     for storage_type, config in storage_configs:
