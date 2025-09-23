@@ -7,7 +7,9 @@ LSM-Tree 可视化工具
 
 import time
 import os
-from lsm_tree import LSMTree
+import sys
+sys.path.append('../src')
+from lsm_tree_v3 import LSMTreeV3
 
 
 class LSMTreeVisualizer:
@@ -22,8 +24,12 @@ class LSMTreeVisualizer:
         print("MemTable Flush 过程可视化")
         print("=" * 60)
         
-        # 创建小容量的LSM-Tree以便观察flush
-        self.lsm = LSMTree(data_dir="./visual_demo", max_memtable_size=3)
+        # 创建小容量的LSM-Tree以便观察flush，使用JSON存储方便查看
+        self.lsm = LSMTreeV3(
+            storage_type='json',
+            storage_config={'base_path': '../data/visual_demo'},
+            max_memtable_size=3
+        )
         
         print("MemTable容量限制: 3")
         print("插入数据观察flush过程:\n")
@@ -54,7 +60,11 @@ class LSMTreeVisualizer:
         print("=" * 60)
         
         # 创建更小的容量限制以便快速触发compaction
-        self.lsm = LSMTree(data_dir="./compaction_visual", max_memtable_size=2)
+        self.lsm = LSMTreeV3(
+            storage_type='json',
+            storage_config={'base_path': '../data/compaction_visual'},
+            max_memtable_size=2
+        )
         
         print("MemTable容量限制: 2")
         print("Level 0容量限制: 3")
@@ -86,7 +96,11 @@ class LSMTreeVisualizer:
         print("读取过程可视化")
         print("=" * 60)
         
-        self.lsm = LSMTree(data_dir="./read_visual", max_memtable_size=3)
+        self.lsm = LSMTreeV3(
+            storage_type='json',
+            storage_config={'base_path': '../data/read_visual'},
+            max_memtable_size=3
+        )
         
         # 插入一些数据
         print("插入测试数据:")
@@ -145,7 +159,11 @@ class LSMTreeVisualizer:
         print("空间使用情况可视化")
         print("=" * 60)
         
-        self.lsm = LSMTree(data_dir="./space_visual", max_memtable_size=5)
+        self.lsm = LSMTreeV3(
+            storage_type='json',
+            storage_config={'base_path': '../data/space_visual'},
+            max_memtable_size=5
+        )
         
         print("插入重复键观察空间放大:\n")
         
@@ -175,7 +193,11 @@ class LSMTreeVisualizer:
         print("LSM-Tree 交互式演示")
         print("=" * 60)
         
-        self.lsm = LSMTree(data_dir="./interactive_demo", max_memtable_size=5)
+        self.lsm = LSMTreeV3(
+            storage_type='json',
+            storage_config={'base_path': '../data/interactive_demo'},
+            max_memtable_size=5
+        )
         
         print("输入命令进行操作:")
         print("  put <key> <value>  - 插入键值对")
