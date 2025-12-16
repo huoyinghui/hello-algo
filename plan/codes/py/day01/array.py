@@ -47,13 +47,28 @@ class Array(object):
         return
     
     @classmethod
-    def traverse(cls, arr: list) -> None:
+    def reverse(cls, arr: list) -> list:
         # return arr[::-1]
         n = len(arr)
         new_arr = [None] * n
         for i in range(n):
             new_arr[i] = arr[n-1 - i]
         return new_arr
+
+    @classmethod
+    def traverse(cls, arr: list) -> None:
+        # 1.for range
+        for i in range(len(arr)):
+            print(f"i:{i} v:{arr[i]}")
+
+        # 2.for item in arr:
+        for item in arr:
+            print(f"v:{item}")
+
+        # 3.for i, item in enumerate(arr):
+        for i, item in enumerate(arr):
+            print(f"i:{i} v:{item}")
+        return 
     
     @classmethod
     def find(cls, arr: list, value: int) -> int:
@@ -68,11 +83,11 @@ def main():
     # print(Array.random_access(arr, 2))
     Array.insert(arr, 2, 6)
     #     [1, 2, 6, 3, 4]
-    print(arr)
-    print(Array.find(arr, 3))
-    Array.remove(arr, 2)
+    # print(arr)
+    # print(Array.find(arr, 3))
+    # Array.remove(arr, 2)
     #    [1, 2, 3, 4, 4]
-    print(arr)
+    # print(arr)
 
     print(Array.traverse(arr))
 
