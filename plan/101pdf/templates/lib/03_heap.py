@@ -44,4 +44,15 @@ def heap_sort(nums):
 # 合并有序序列
 merged = heapq.merge([1, 3, 5], [2, 4, 6])
 print(f"merged: {list(merged)}")
-# [1, 2, 3, 4, 5, 6]
+# [1, 2, 3, 4, 5, 6o okjs
+
+def main():
+    nums = [3, 1, 4, 1, 5, 9, 2, 6]
+    heapq.heapify(nums)
+    print(nums)
+    for i in range(len(nums)):
+        print(heapq.heappop(nums))
+
+
+if __name__ == "__main__":
+    main()

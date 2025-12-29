@@ -9,11 +9,11 @@ from collections import deque
 # 创建
 dq = deque([1, 2, 3])
 
-# 右端操作 - queue
+# 右端操作 
 dq.append(4)        # [1, 2, 3, 4]
 dq.pop()            # 4, [1, 2, 3]
 
-# 左端操作 - stack
+# 左端操作 
 dq.appendleft(0)    # [0, 1, 2, 3]
 print(f"dq.appendleft: {dq}")
 dq.popleft()        # 0, [1, 2, 3]
