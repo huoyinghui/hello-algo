@@ -1,22 +1,41 @@
 from typing import List
 
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    # def twoSum(self, nums: List[int], target: int) -> List[int]:
+    #     """
+    #     dict = {}
+    #     O(n)
+    #     """
+    #     ret = {}
+    #     item_list = set()
+    #     for i, num in enumerate(nums):
+    #         other = target - num 
+    #         if other in ret:
+    #             # item = [ret[other], i]
+    #             # item_list.append(item)
+    #             item = (other, num)
+    #             item_list.add(item)
+    #         else:
+    #             ret[num] = i
+    #     return list(item_list)
+    def twoSumItem(self, nums: List[int], target: int, third: int) -> List[int]:
         """
-        dict = {}
-        O(n)
+        nums: 已经排序
+        l, r
         """
-        ret = {}
         item_list = set()
-        for i, num in enumerate(nums):
-            other = target - num 
-            if other in ret:
-                # item = [ret[other], i]
-                # item_list.append(item)
-                item = (other, num)
+        l, r = 0, len(nums) -1
+        while l < r:
+            s = nums[l] + nums[r]
+            print(f"l: {l}, r: {r}, s: {s}")
+            if s == target:
+                item = (third, nums[l], nums[r])
                 item_list.add(item)
+                l += 1
+            elif s < target:
+                l += 1
             else:
-                ret[num] = i
+                r -= 1
         return list(item_list)
 
     def newArr(self, nums: List[int], i):
@@ -45,11 +64,10 @@ class Solution:
             vist.add(nums[i])
             cur = nums[i]
             arr = self.newArr(nums, i)
-            ret = self.twoSum(arr, 0-cur)
-            # print(f"i: {i}, cur:{cur}, tow sum {0-cur}, arr:{arr} ret:{ret}")
-            if ret:
-                item = [(nums[i], *v) for v in ret]
-                ret_list.extend(item)
+            item_list = self.twoSumItem(arr, 0-cur, cur)
+            print(f"i: {i}, cur:{cur}, tow sum {0-cur}, arr:{arr} item_list:{item_list}")
+            if item_list:
+                ret_list.extend(item_list)
         # return list(ret_list)
         return ret_list
 
@@ -80,7 +98,7 @@ nums[0] + nums[3] + nums[4] = (-1) + 2 + (-1) = 0 。
     """
     nums = [-1, 0, 1, 2, -1, -4]
     # nums = [0, 0, 0]
-    nums = [0, 0, 0, 0]
+    # nums = [0, 0, 0, 0]
     print(Solution().threeSum(nums))
 
 
